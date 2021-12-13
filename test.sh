@@ -1,0 +1,1 @@
+curl -X POST http://localhost:8080/rewards/calculate --header "Content-Type: application/json" --data '[{"id":"1","customerId":"2","date":"10.02.2021","payment":120},{"id":"1","customerId":"2","date":"10.03.2021","payment":200000000000}]'
