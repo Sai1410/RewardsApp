@@ -4,12 +4,12 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RewardModel {
+public class Reward {
 
     private BigInteger total;
     private Map<String, BigInteger> perMonth;
 
-    public RewardModel() {
+    public Reward() {
         this.total = BigInteger.valueOf(0);
         this.perMonth = new HashMap<>();
     }

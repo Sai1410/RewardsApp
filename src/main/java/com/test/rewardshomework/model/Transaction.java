@@ -1,6 +1,8 @@
 package com.test.rewardshomework.model;
 
 import lombok.*;
+import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -9,21 +11,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-@Component
+@Document
 @NoArgsConstructor
-public class TransactionModel {
+public class Transaction {
 
+    @Id
     private String id;
-    private String customerId;
+    private String customerName;
     private String date;
     private BigDecimal payment;
-
-    public TransactionModel(String id, String customerId, String date, BigDecimal payment) {
-        this.id = id;
-        this.customerId = customerId;
-        this.date = date;
-        this.payment = payment;
-    }
 
     public String getMonth() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
@@ -35,31 +31,11 @@ public class TransactionModel {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+    public String getCustomerName() {
+        return customerName;
     }
 
     public BigDecimal getPayment() {
         return payment;
-    }
-
-    public void setPayment(BigDecimal payment) {
-        this.payment = payment;
     }
 }

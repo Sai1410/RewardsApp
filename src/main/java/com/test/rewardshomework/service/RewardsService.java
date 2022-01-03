@@ -1,7 +1,8 @@
 package com.test.rewardshomework.service;
 
-import com.test.rewardshomework.model.RewardModel;
-import com.test.rewardshomework.model.TransactionModel;
+import com.test.rewardshomework.model.Reward;
+import com.test.rewardshomework.model.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -11,34 +12,52 @@ import java.util.*;
 @Service
 public class RewardsService {
 
-    public Map<String, RewardModel> calculateRewards(List<TransactionModel> transactions) throws ParseException {
+    @Autowired
+    TransactionsService transactionsService;
 
-        Map<String, RewardModel> rewards = new HashMap<>();
+    public Map<String, Reward> calculateAllRewards() throws ParseException {
 
-        for(TransactionModel transaction : transactions){
-            String customerId = transaction.getCustomerId();
-            BigInteger points = calculateTotalPoints(transaction.getPayment().toBigInteger());
-            String month = transaction.getMonth();
+        List<Transaction> transactions = transactionsService.getAllTransactions();
+        Map<String, Reward> rewards = new HashMap<>();
 
-            RewardModel reward = rewards.get(customerId);
+        for(Transaction transaction : transactions){
+            String customerName = transaction.getCustomerName();
+            Reward reward = rewards.get(customerName);
             if(reward == null){
-                reward = new RewardModel();
+                reward = new Reward();
             }
 
-            reward.setTotal(reward.getTotal().add(points));
+            calculatePoints(reward, transaction);
 
-            Map<String, BigInteger> perMonth = reward.getPerMonth();
-            perMonth.merge(month, points, BigInteger::add);
-
-            reward.setPerMonth(perMonth);
-
-            rewards.put(customerId, reward);
+            rewards.put(customerName, reward);
         }
 
         return rewards;
     }
 
-    public BigInteger calculateTotalPoints(BigInteger payment){
+    public Reward calculateReward(String customerName) throws ParseException {
+        List<Transaction> transactions = transactionsService.getTransactions(customerName);
+        Reward reward = new Reward();
+
+        for(Transaction transaction : transactions){
+            calculatePoints(reward, transaction);
+        }
+
+        return reward;
+    }
+
+    private void calculatePoints(Reward currentReward, Transaction transaction) throws ParseException {
+        BigInteger points = calculateTotalPoints(transaction.getPayment().toBigInteger());
+        String month = transaction.getMonth();
+
+        currentReward.setTotal(currentReward.getTotal().add(points));
+
+        Map<String, BigInteger> perMonth = currentReward.getPerMonth();
+        perMonth.merge(month, points, BigInteger::add);
+        currentReward.setPerMonth(perMonth);
+    }
+
+    private BigInteger calculateTotalPoints(BigInteger payment){
         if(payment.compareTo(BigInteger.valueOf(50)) < 0 || payment.compareTo(BigInteger.valueOf(50)) == 0){
             return BigInteger.valueOf(0);
         }
