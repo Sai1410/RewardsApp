@@ -14,6 +14,11 @@ public class Reward {
         this.perMonth = new HashMap<>();
     }
 
+    public Reward(BigInteger total, Map<String, BigInteger> perMonth) {
+        this.total = total;
+        this.perMonth = perMonth;
+    }
+
     public BigInteger getTotal() {
         return total;
     }

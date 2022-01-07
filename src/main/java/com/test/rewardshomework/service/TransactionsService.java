@@ -11,8 +11,11 @@ import java.util.Optional;
 @Service
 public class TransactionsService {
 
-    @Autowired
     TransactionRepository transactionRepository;
+
+    TransactionsService(TransactionRepository transactionRepository){
+        this.transactionRepository = transactionRepository;
+    }
 
     public Optional<Transaction> getTransaction(String id){
         return transactionRepository.findById(id);

@@ -1,49 +1,49 @@
 [
   {
     "id": 1,
-    "customerId": "Andrzej",
+    "customerName": "Andrzej",
     "date": "20.12.2021",
     "payment": 120
   },
   {
     "id": 2,
-    "customerId": "Andrzej",
+    "customerName": "Andrzej",
     "date": "21.11.2021",
     "payment": 50.14
   },
   {
     "id": 3,
-    "customerId": "Andrzej",
+    "customerName": "Andrzej",
     "date": "21.10.2021",
     "payment": 200
   },
   {
     "id": 4,
-    "customerId": "Andrzej",
+    "customerName": "Andrzej",
     "date": "05.12.2021",
     "payment": 0.15
   },
   {
     "id": 5,
-    "customerId": "Andrzej",
+    "customerName": "Andrzej",
     "date": "04.12.2021",
     "payment": 1
   },
   {
     "id": 6,
-    "customerId": "Janusz",
+    "customerName": "Janusz",
     "date": "21.09.2021",
     "payment": 150.14
   },
   {
     "id": 7,
-    "customerId": "Janusz",
+    "customerName": "Janusz",
     "date": "21.10.2021",
     "payment": 1
   },
   {
     "id": 9,
-    "customerId": "Janusz",
+    "customerName": "Janusz",
     "date": "21.11.2021",
     "payment": 0
   }

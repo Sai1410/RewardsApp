@@ -14,24 +14,27 @@ import java.util.Optional;
 @Controller
 public class TransactionsController {
 
-    @Autowired
     TransactionsService transactionsService;
 
-    @PostMapping("/transaction/add")
+    public TransactionsController(TransactionsService transactionsService) {
+        this.transactionsService = transactionsService;
+    }
+
+    @PostMapping("/transactions")
     public @ResponseBody
     ResponseEntity<String> addTransaction(@RequestBody Transaction transaction) {
         transactionsService.addTransaction(transaction);
         return new ResponseEntity<String>("POST Response", HttpStatus.OK);
     }
 
-    @PutMapping("/transaction/update")
+    @PutMapping("/transactions")
     public @ResponseBody
     ResponseEntity<String> updateTransaction(@RequestBody Transaction transaction) {
         transactionsService.updateTransaction(transaction);
         return new ResponseEntity<String>("Update transaction", HttpStatus.OK);
     }
 
-    @GetMapping("/transaction/get/{id}")
+    @GetMapping("/transactions/{id}")
     public @ResponseBody
     ResponseEntity<String> getTransaction(@PathVariable String id) {
         Optional<Transaction> transaction = transactionsService.getTransaction(id);
@@ -39,21 +42,21 @@ public class TransactionsController {
                 + value.getId(), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>("GET Response", HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/transaction/get")
+    @GetMapping("/transactions")
     public @ResponseBody
-    ResponseEntity<String> getAllTransactions() {
+    ResponseEntity<List<Transaction>> getAllTransactions() {
         List<Transaction> transactions = transactionsService.getAllTransactions();
-        return new ResponseEntity<String>("GET Response" + transactions.toString(), HttpStatus.OK);
+        return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
     }
 
-    @DeleteMapping("/transaction/delete/{id}")
+    @DeleteMapping("/transactions/{id}")
     public @ResponseBody
     ResponseEntity<String> deleteTransaction(@PathVariable String id) {
         transactionsService.deleteTransaction(id);
         return new ResponseEntity<String>("DELETE Response", HttpStatus.OK);
     }
 
-    @DeleteMapping("/transaction/delete")
+    @DeleteMapping("/transactions")
     public @ResponseBody
     ResponseEntity<String> deleteAllTransactions() {
         transactionsService.deleteAllTransactions();

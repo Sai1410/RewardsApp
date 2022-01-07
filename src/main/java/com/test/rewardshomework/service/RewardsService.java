@@ -12,8 +12,11 @@ import java.util.*;
 @Service
 public class RewardsService {
 
-    @Autowired
     TransactionsService transactionsService;
+
+    RewardsService(TransactionsService transactionsService){
+        this.transactionsService = transactionsService;
+    }
 
     public Map<String, Reward> calculateAllRewards() throws ParseException {
 
